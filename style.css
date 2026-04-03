@@ -1,0 +1,96 @@
+/* RESET */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  }
+
+/* BODY */
+body {
+height: 100vh;
+background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+}
+
+/* CONTAINER */
+.container {
+text-align: center;
+backdrop-filter: blur(20px);
+background: rgba(255,255,255,0.08);
+border-radius: 20px;
+padding: 40px;
+width: 360px;
+box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+transition: 0.3s;
+}
+
+.container:hover {
+transform: translateY(-5px);
+}
+
+/* TITLE */
+h1 {
+font-size: 30px;
+margin-bottom: 10px;
+}
+
+p {
+font-size: 14px;
+opacity: 0.7;
+margin-bottom: 25px;
+}
+
+/* BUTTON */
+button {
+background: linear-gradient(45deg, #ff416c, #ff4b2b);
+border: none;
+padding: 14px 30px;
+color: white;
+font-size: 16px;
+border-radius: 12px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+button:hover {
+transform: scale(1.08);
+box-shadow: 0 10px 25px rgba(255,75,43,0.5);
+}
+
+/* SELECT DROPDOWN */
+select {
+margin-top: 20px;
+padding: 10px;
+border-radius: 10px;
+border: none;
+outline: none;
+width: 100%;
+}
+
+/* STATUS TEXT */
+.status {
+margin-top: 15px;
+font-size: 13px;
+opacity: 0.8;
+}
+
+/* PULSE DOT */
+.pulse {
+width: 12px;
+height: 12px;
+background: #ff4b2b;
+border-radius: 50%;
+margin: 15px auto;
+animation: pulse 1s infinite;
+display: none;
+}
+
+@keyframes pulse {
+0% {transform: scale(1); opacity: 1;}
+100% {transform: scale(2.2); opacity: 0;}
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">>
+  <title>Slap App Web</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #111;
+      color: white;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    select {
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>👋 Slap Your Laptop</h1>
+  <p>Click start and slap near your device</p>
+
+  <button onclick="start()">Start Listening</button>
+
+  <br>
+
+  <select id="pack">
+    <option value="meme">Meme 😂</option>
+    <option value="anime">Anime 🔥</option>
+    <option value="gym">Gym 💪</option>
+    <option value="naughty">Naughty 😏</option>
+  </select>
+
+<br> <br>
+<p> *make sure your device mic is unmuted from settings</p>  
+
+<script>
+let started = false;
+let currentAudio = null;
+
+const soundPacks = {
+  meme: ["sounds/meme/meme1.mp3",
+  "sounds/meme/meme2.mp3",
+  "sounds/meme/meme3.mp3",
+  "sounds/meme/meme4.mp3",
+  "sounds/meme/meme5.mp3",
+  "sounds/meme/meme7.mp3",
+  "sounds/meme/meme8.mp3",
+  "sounds/meme/meme9.mp3",
+  "sounds/meme/meme10.mp3",
+  "sounds/meme/meme11.mp3",
+  "sounds/meme/meme12.mp3",
+  "sounds/meme/meme13.mp3",
+  "sounds/meme/meme14.mp3"
+  ],
+  anime: ["sounds/anime/anime2.mp3",
+          "sounds/anime/anime3.mp3",
+          "sounds/anime/anime4.mp3",
+          "sounds/anime/anime5.mp3",
+          "sounds/anime/anime6.mp3"
+  ],
+  gym: ["sounds/gym/gym1.mp3",
+        "sounds/gym/gym2.mp3",
+        "sounds/gym/gym3.mp3",
+        "sounds/gym/gym4.mp3"
+  ],
+  naughty: ["sounds/naughty/naughty1.mp3",
+            "sounds/naughty/naughty2.mp3",
+            "sounds/naughty/naughty3.mp3",
+  ]
+};
+
+function start() {
+  if (started) return;
+  started = true;
+
+  navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    const audioContext = new AudioContext();
+    const source = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+
+    source.connect(analyser);
+
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    function detectSound() {
+      analyser.getByteTimeDomainData(data);
+
+      let peak = Math.max(...data);
+
+      if (peak > 200) {
+        playRandomSound();
+      }
+
+      requestAnimationFrame(detectSound);
+    }
+
+    detectSound();
+  });
+}
+
+function playRandomSound() {
+  let selectedPack = document.getElementById("pack").value;
+  let sounds = soundPacks[selectedPack];
+
+  let randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+
+ // Stop previous sound if playing
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  // Play new sound
+  currentAudio = new Audio(randomSound);
+  currentAudio.play();
+}
+</script>
+
+</body>
+</html>
